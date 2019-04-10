@@ -1,0 +1,125 @@
+@import url('https://fonts.googleapis.com/css?family=ZCOOL+QingKe+HuangYou');
+
+:root{
+    color: #ddd;
+    font-family: 'ZCOOL QingKe HuangYou', cursive;
+    font-size: 24px;
+}
+
+body{
+    margin:0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    background: #777;
+}
+
+/* WINDOWS */
+
+.scoreboard, .play-field, .move-field{
+    position: fixed;
+    display: flex;
+    left: 50%;
+    background: #333;
+    transform: translateX(-50%);
+    line-height: 100px;
+    border: 2px solid rgba(221, 221, 221, 0.75);
+    border-radius: 20px 20px 0 0;
+}
+
+/* SCOREBOARD */
+.scoreboard {
+    top: 40px;
+    width: 350px;
+    height: 100px;
+    text-align: center;
+    font-size: 2.3rem;
+    font-weight: 800;
+    line-height: 100px;
+}
+
+#user-icon,
+#comp-icon,
+#crown-icon,
+#divider-icon {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.7rem;
+}
+
+#user-icon {
+    left: -1px;
+}
+
+#comp-icon {
+    left: 351px;
+}
+
+#divider-icon {
+    left: 175px;
+    transform-origin: 50%, 50%;
+    transform: rotate(90deg);
+}
+
+#crown-icon {
+    top: 0%;
+    color: #fd0;
+    left: 50%;
+    z-index: 10;
+    transition: left .3s ease;
+}
+
+#comp-score,
+#user-score {
+    flex: 1;
+}
+
+/* PLAY-FIELD */
+.play-field{
+    top: 140px;
+    width: 800px;
+    height: 400px;
+}
+
+#user-hand, #comp-hand{
+    flex: 1;
+    text-align: center;
+    line-height: 400px;
+    font-size: 200px;
+}
+#user-hand, .move{
+    border-right: 2px solid rgba(221, 221, 221, 0.75);
+}
+#round-state{
+    position: fixed;
+    top: 85%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 4rem;
+}
+
+/* MOVE-FIELD */
+.move-field{
+    border-radius: 0 0 20px 20px;
+    top: 540px;
+    width: 800px;
+    overflow: hidden;
+}
+
+.move{
+    flex: 1;
+    text-align: center;
+    font-size: 70px;
+}
+.move:last-child{border-right: none;}
+.move:hover{
+    background: #444;
+    line-height: 90px;
+    text-shadow: 0 5px 10px #111;
+}
+
+app{
+    zoom: 1;
+}

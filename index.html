@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+
+    <title>Rock, Paper, Scisors</title>
+</head>
+<body>
+    <app>
+        <div class="scoreboard">
+            <i id="crown-icon" class="fas fa-crown"></i>
+            <i id="user-icon" class="fas fa-smile" onclick="changeMood()"></i><!-- fa-frown ALTERNATIVE -->
+            <i id="comp-icon" class="fas fa-robot"></i>
+            <span id="user-score">0</span>:<span id="comp-score">0</span>
+        </div>
+
+        <div class="play-field">
+            <div id="user-hand"></div>
+            <div id="comp-hand"></div>
+            <div id="round-state"></div>
+        </div>
+
+        <div class="move-field">
+            <div class="move" onclick="move(0)"><i class="fas fa-hand-rock"></i></div>
+            <div class="move" onclick="move(1)"><i class="fas fa-hand-paper"></i></div>
+            <div class="move" onclick="move(2)"><i class="fas fa-hand-scissors"></i></div>
+        </div>
+    </app>
+
+    <script>
+
+        hand = [
+            {id:0, name: "rock", icon: '<i class="fas fa-hand-rock"></i>'},
+            {id:1, name: "paper", icon: '<i class="fas fa-hand-paper"></i>'},
+            {id:2, name: "scisors", icon: '<i class="fas fa-hand-scissors"></i>'}
+        ]
+
+        score={
+            user: 0,
+            comp: 0,
+        }
+
+        const userHand = $('#user-hand');
+        const compHand = $('#comp-hand');
+        const roundState = $('#round-state');
+
+        userHand.fadeOut(0);
+        compHand.fadeOut(0);
+        roundState.fadeOut(0);
+
+        function move(move)
+        {
+            if(userHand.css("display") != "none") return;
+            let compMove = Math.floor(Math.random()*3);
+
+            userHand.html(hand[move].icon);
+            compHand.html(hand[compMove].icon);
+
+            userHand.fadeIn(250);
+            compHand.fadeIn(250);
+
+
+            if(compMove==move) round("draw");
+            else if(move == compMove +1 || (compMove == 2 && move == 0)) round("win");
+            else round("lost");
+        }
+
+        function round(status)
+        {
+            let round = $
+            switch(status)
+            {
+                case "win": score.user++; roundState.html("WIN"); break;
+                case "lost": score.comp++; roundState.html("LOST"); break;
+                case "draw": roundState.html("DRAW"); break;
+            }
+
+            setTimeout(() => {roundState.fadeIn(300);}, 300);
+            
+
+            updateScore();
+
+            setTimeout(() => {
+                userHand.fadeOut(250);
+                compHand.fadeOut(250);
+                roundState.fadeOut(250);
+            }, 1000);
+        }
+
+        function updateScore()
+        {
+            // CROWN POSITION //
+            let crown = $('#crown-icon');
+            if(score.user==score.comp) crown.css("left","50%");
+            else 
+            if(score.user>score.comp) crown.css("left","0%");
+            else 
+            crown.css("left","100%");
+
+            // DISPLAY SCORE //
+            $('#user-score').html(score.user);
+            $('#comp-score').html(score.comp);
+        }
+        
+
+
+        function changeMood(){
+            let obj = $('#user-icon');
+
+            if(obj.hasClass('fa-smile'))
+            {
+                obj.fadeOut(200);
+                setTimeout(()=>{
+                    obj.addClass("fa-frown");
+                    obj.removeClass('fa-smile');
+                    obj.fadeIn(200);
+                },200);
+            }
+            else
+            {
+                obj.fadeOut(200);
+                setTimeout(()=>{
+                    obj.addClass("fa-smile");
+                    obj.removeClass('fa-frown');
+                    obj.fadeIn(200);
+                },200);
+            }
+        }
+
+        function scaleApp()
+        {
+            let scale = $(window).height()/650;
+            $('app').css("zoom", scale);
+        }
+
+        $(window).resize(()=>{scaleApp()})
+        scaleApp();
+    </script>
+</body>
+</html>
